@@ -1,4 +1,4 @@
-export class MobileControls {
+export class MobileControls{
   constructor(keys){
     const map={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD'};
     document.querySelectorAll('[data-key]').forEach(btn=>{
