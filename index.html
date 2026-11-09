@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#07130f" />
+  <meta name="description" content="Gathbandhan Kursi Race — a cinematic political king-of-the-hill arcade game." />
+  <title>Gathbandhan Kursi Race</title>
+</head>
+<body>
+  <div id="app">
+    <div id="loading"><div class="loader-mark">GK</div><p>PREPARING THE HOUSE</p></div>
+    <div id="game-root"></div>
+    <div id="hud" class="hidden">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark">GK</span><span>GATHBANDHAN <b>KURSI RACE</b></span></div>
+        <div class="timer-wrap"><small>SESSION TIME</small><strong id="timer">30</strong></div>
+        <button id="pause-btn" class="icon-btn" aria-label="Pause">Ⅱ</button>
+      </header>
+      <section class="score-row">
+        <div class="score-card player-one"><small>MITRAMAN</small><strong id="score-one">0%</strong><div class="meter"><i id="meter-one"></i></div></div>
+        <div class="status-pill" id="status">THE HOUSE IS OPEN</div>
+        <div class="score-card player-two"><small>YATRA BOY</small><strong id="score-two">0%</strong><div class="meter"><i id="meter-two"></i></div></div>
+      </section>
+      <div id="ticker">THE RACE FOR THE KURSI BEGINS</div>
+      <div class="controls-hint desktop-hint">MOVE: WASD / ARROWS &nbsp; • &nbsp; PUSH: SPACE &nbsp; • &nbsp; DASH: SHIFT</div>
+      <div class="mobile-controls">
+        <div class="dpad">
+          <button data-key="up">▲</button><div><button data-key="left">◀</button><button data-key="down">▼</button><button data-key="right">▶</button></div>
+        </div>
+        <div class="action-pad"><button id="push-btn">PUSH</button><button id="dash-btn">DASH</button></div>
+      </div>
+    </div>
+    <div id="overlay" class="overlay">
+      <div class="panel">
+        <div class="eyebrow">A PARLIAMENTARY POWER PLAY</div>
+        <h1>GATHBANDHAN<br><em>KURSI RACE</em></h1>
+        <p class="intro">One throne. Two alliances. Thirty seconds to claim the house.</p>
+        <div class="character-pair"><div><span class="avatar green">M</span><b>MITRAMAN</b><small>PLAYER ONE</small></div><div class="versus">VS</div><div><span class="avatar saffron">Y</span><b>YATRA BOY</b><small>RIVAL CPU</small></div></div>
+        <div class="rule"><span>01</span> Reach the central VIP Kursi and hold your ground.</div>
+        <div class="rule"><span>02</span> Push your rival away to interrupt their capture.</div>
+        <div class="rule"><span>03</span> Highest coalition score when time expires wins.</div>
+        <button id="start-btn" class="primary-btn">ENTER THE HOUSE <span>↗</span></button>
+        <small class="footnote">Original arcade experience • Fictional characters • Demo build</small>
+      </div>
+    </div>
+    <div id="result" class="overlay hidden">
+      <div class="panel result-panel"><div class="eyebrow">THE HOUSE HAS DECIDED</div><h2 id="result-title">MANDATE WON</h2><p id="result-copy"></p><button id="again-btn" class="primary-btn">RACE AGAIN ↗</button></div>
+    </div>
+    <div id="pause-overlay" class="overlay hidden"><div class="panel"><div class="eyebrow">SESSION PAUSED</div><h2>TAKE A BREATHER</h2><button id="resume-btn" class="primary-btn">RESUME RACE ↗</button></div></div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
