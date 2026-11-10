@@ -3,7 +3,7 @@ export class GameHUD{
   update(){
     const m=this.match;this.timer.textContent=Math.ceil(m.time);
     const a=Math.floor(m.scores[0]),b=Math.floor(m.scores[1]);this.one.textContent=a+'%';this.two.textContent=b+'%';this.m1.style.width=a+'%';this.m2.style.width=b+'%';
-    this.status.textContent=m.contested?'KURSI PAR TAKKAR!':m.owner===0?'MITRAMAN HAS THE KURSI':m.owner===1?'YATRA BOY IN POWER':'THE HOUSE IS OPEN';
+    this.status.textContent=m.contested?'KURSI PAR TAKKAR!':m.owner===0?'MITRAMAN HAS THE KURSI':m.owner===1?'YATRA BOY IN POWER':m.captureProgress?.[0]>.1?'MITRAMAN IS CAPTURING':m.captureProgress?.[1]>.1?'YATRA BOY IS CAPTURING':'THE HOUSE IS OPEN';
     this.ticker.textContent=m.contested?'GATHBANDHAN TOOT GAYA — CAPTURE CONTESTED':m.owner===0?'KURSI PAR KABZA! MITRAMAN LEADS THE HOUSE':m.owner===1?'SARKAR KHATRE MEIN! YATRA BOY IS RISING':'THE RACE FOR THE KURSI BEGINS';
   }
   showResult(scores){
