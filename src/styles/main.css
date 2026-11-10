@@ -1,7 +1,92 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
-:root{font-family:'DM Sans',sans-serif;color:#f4f4e9;background:#07130f;font-synthesis:none}*{box-sizing:border-box}html,body,#app{margin:0;width:100%;height:100%;overflow:hidden}body{background:#07130f}#game-root{position:absolute;inset:0}canvas{display:block;width:100%;height:100%}#loading{position:absolute;z-index:20;inset:0;background:#07130f;display:grid;place-content:center;text-align:center;letter-spacing:.2em;font-size:11px;color:#a4b7a9;transition:opacity .5s}#loading.hidden{opacity:0;pointer-events:none}.loader-mark,.brand-mark{display:grid;place-items:center;background:#a4ef61;color:#092116;font-weight:900;font-family:'Barlow Condensed';border-radius:12px}.loader-mark{width:58px;height:58px;font-size:25px;margin:auto}.overlay{position:absolute;z-index:10;inset:0;display:grid;place-items:center;padding:18px;background:linear-gradient(90deg,rgba(3,13,9,.88),rgba(3,13,9,.38),rgba(3,13,9,.84));backdrop-filter:blur(5px)}.hidden{display:none!important}.panel{width:min(570px,100%);padding:clamp(22px,5vw,42px);border:1px solid rgba(206,221,195,.22);border-radius:22px;background:linear-gradient(145deg,rgba(16,39,29,.97),rgba(6,19,14,.97));box-shadow:0 28px 90px #0009}.eyebrow{font-size:10px;font-weight:700;letter-spacing:.24em;color:#a8eb6d}.panel h1{font:900 clamp(42px,9vw,76px)/.82 'Barlow Condensed',sans-serif;letter-spacing:-.025em;margin:18px 0}.panel h1 em{font-style:normal;color:#a5ef62}.intro{color:#b7c5b9;font-size:14px;line-height:1.6;max-width:370px}.character-pair{display:flex;align-items:center;justify-content:space-between;margin:24px 0;padding:17px 12px;border-block:1px solid #ffffff1b}.character-pair>div:not(.versus){display:grid;gap:5px;text-align:center;font-size:11px;letter-spacing:.08em}.character-pair small{font-size:9px;color:#91a79a}.avatar{width:49px;height:49px;margin:auto;display:grid;place-items:center;border-radius:15px;font:800 26px 'Barlow Condensed';color:#08170f}.green{background:#65e6a2}.saffron{background:#ffad61}.versus{font:800 14px 'Barlow Condensed';color:#84988a}.rule{display:flex;gap:14px;align-items:center;margin:12px 0;color:#c4d0c5;font-size:12px}.rule span{color:#a7ec68;font:800 15px 'Barlow Condensed'}.primary-btn{width:100%;border:0;border-radius:10px;background:#a6ed66;color:#0a1a10;padding:16px 18px;margin-top:23px;font-weight:900;letter-spacing:.08em;cursor:pointer}.primary-btn span{float:right}.footnote{display:block;text-align:center;margin-top:16px;color:#71877a;font-size:9px;letter-spacing:.08em}.topbar{position:absolute;top:18px;left:20px;right:20px;display:flex;align-items:center;gap:15px;z-index:3}.brand{display:flex;align-items:center;gap:10px;font:700 11px 'Barlow Condensed';letter-spacing:.1em}.brand b{color:#a6ed66}.brand-mark{width:34px;height:34px;border-radius:9px;font-size:16px}.timer-wrap{margin-left:auto;text-align:center;display:grid}.timer-wrap small,.score-card small{font-size:8px;letter-spacing:.18em;color:#b4c3b6}.timer-wrap strong{font:800 29px 'Barlow Condensed'}.icon-btn{border:1px solid #ffffff3a;background:#0b2018cc;color:white;border-radius:9px;width:38px;height:38px}.score-row{position:absolute;z-index:3;top:74px;left:20px;right:20px;display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}.score-card{max-width:250px}.score-card strong{display:block;font:800 23px 'Barlow Condensed'}.player-two{text-align:right;justify-self:end}.meter{height:5px;background:#ffffff25;border-radius:5px;overflow:hidden;margin-top:5px}.meter i{display:block;height:100%;width:0;background:#62e4a0;transition:width .2s}.player-two .meter i{margin-left:auto;background:#ffad61}.status-pill{font-size:9px;font-weight:800;letter-spacing:.1em;padding:9px 12px;border:1px solid #ffffff38;border-radius:30px;background:#0a1b14c9;text-align:center}#ticker{position:absolute;z-index:3;top:145px;left:50%;transform:translateX(-50%);font:700 10px 'Barlow Condensed';letter-spacing:.15em;color:#e8d39d;text-align:center;white-space:nowrap}.controls-hint{position:absolute;z-index:3;bottom:18px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.12em;color:#c1d1c4;background:#07130fa8;padding:10px 16px;border-radius:30px}.mobile-controls{display:none}.result-panel{text-align:center}.result-panel h2{font:900 clamp(36px,8vw,58px)/.95 'Barlow Condensed';margin:20px 0;color:#a6ed66}.result-panel p{color:#bdcabe;font-size:13px}
-@media(max-width:700px){.panel{padding:24px 20px}.panel h1{font-size:52px}.intro{font-size:12px}.score-row{top:67px;left:12px;right:12px;gap:7px}.status-pill{font-size:7px;padding:7px 8px}.score-card strong{font-size:19px}.score-card small{font-size:7px}.topbar{top:12px;left:12px;right:12px}.brand{font-size:9px}.timer-wrap strong{font-size:24px}#ticker{top:128px;font-size:8px;max-width:95%;white-space:normal}.desktop-hint{display:none}.mobile-controls{display:flex;position:absolute;z-index:4;bottom:18px;left:16px;right:16px;justify-content:space-between;align-items:end;pointer-events:none}.dpad,.action-pad{pointer-events:auto}.dpad button,.action-pad button{border:1px solid #ffffff45;background:#10271fd9;color:#fff;border-radius:12px;width:42px;height:42px;font-weight:800;touch-action:none}.dpad>button{display:block;margin:0 auto 4px}.dpad div{display:flex;gap:4px}.action-pad{display:flex;gap:8px}.action-pad button{width:62px;height:48px;font-size:9px;letter-spacing:.08em;color:#a6ed66}.character-pair{margin:18px 0;padding:13px 8px}.rule{font-size:10px;margin:10px 0}.footnote{font-size:8px}.brand-mark{width:29px;height:29px}.controls-hint{display:none}}
+:root{font-family:'DM Sans',sans-serif;color:#f4f4e9;background:#07130f;font-synthesis:none}
+*{box-sizing:border-box}
+html,body,#app{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:#07130f}
+#game-root{position:absolute;inset:0}
+canvas{display:block;width:100%;height:100%}
 
+#loading{position:absolute;z-index:20;inset:0;background:#07130f;display:grid;place-content:center;text-align:center;letter-spacing:.2em;font-size:11px;color:#a4b7a9;transition:opacity .5s}
+#loading.hidden{opacity:0;pointer-events:none}
+
+.loader-mark,.brand-mark{display:grid;place-items:center;background:#a4ef61;color:#092116;font-weight:900;font-family:'Barlow Condensed';border-radius:12px}
+.loader-mark{width:58px;height:58px;font-size:25px;margin:auto}
+
+/* FIX: Added overflow-y: auto so overlay content is scrollable on small landscape screens */
+.overlay{position:absolute;z-index:10;inset:0;display:flex;justify-content:center;align-items:center;padding:18px;background:linear-gradient(90deg,rgba(3,13,9,.88),rgba(3,13,9,.38),rgba(3,13,9,.84));backdrop-filter:blur(5px);overflow-y:auto;}
+.hidden{display:none!important}
+
+/* FIX: Added max-height and internal scrolling for panel so buttons don't get cut off */
+.panel{width:min(570px,100%);max-height:92vh;overflow-y:auto;padding:clamp(20px,4vw,38px);border:1px solid rgba(206,221,195,.22);border-radius:22px;background:linear-gradient(145deg,rgba(16,39,29,.97),rgba(6,19,14,.97));box-shadow:0 28px 90px #0009;margin:auto;}
+
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.24em;color:#a8eb6d}
+.panel h1{font:900 clamp(38px,8vw,68px)/.82 'Barlow Condensed',sans-serif;letter-spacing:-.025em;margin:14px 0}
+.panel h1 em{font-style:normal;color:#a5ef62}
+.intro{color:#b7c5b9;font-size:13px;line-height:1.5;max-width:370px}
+.character-pair{display:flex;align-items:center;justify-content:space-between;margin:18px 0;padding:14px 12px;border-block:1px solid #ffffff1b}
+.character-pair>div:not(.versus){display:grid;gap:4px;text-align:center;font-size:11px;letter-spacing:.08em}
+.character-pair small{font-size:9px;color:#91a79a}
+.avatar{width:45px;height:45px;margin:auto;display:grid;place-items:center;border-radius:13px;font:800 24px 'Barlow Condensed';color:#08170f}
+.green{background:#65e6a2}
+.saffron{background:#ffad61}
+.versus{font:800 14px 'Barlow Condensed';color:#84988a}
+.rule{display:flex;gap:12px;align-items:center;margin:10px 0;color:#c4d0c5;font-size:11px}
+.rule span{color:#a7ec68;font:800 14px 'Barlow Condensed'}
+.primary-btn{width:100%;border:0;border-radius:10px;background:#a6ed66;color:#0a1a10;padding:14px 18px;margin-top:18px;font-weight:900;letter-spacing:.08em;cursor:pointer}
+.primary-btn span{float:right}
+.footnote{display:block;text-align:center;margin-top:12px;color:#71877a;font-size:9px;letter-spacing:.08em}
+
+.topbar{position:absolute;top:18px;left:20px;right:20px;display:flex;align-items:center;gap:15px;z-index:3}
+.brand{display:flex;align-items:center;gap:10px;font:700 11px 'Barlow Condensed';letter-spacing:.1em}
+.brand b{color:#a6ed66}
+.brand-mark{width:34px;height:34px;border-radius:9px;font-size:16px}
+.timer-wrap{margin-left:auto;text-align:center;display:grid}
+.timer-wrap small,.score-card small{font-size:8px;letter-spacing:.18em;color:#b4c3b6}
+.timer-wrap strong{font:800 29px 'Barlow Condensed'}
+.icon-btn{border:1px solid #ffffff3a;background:#0b2018cc;color:white;border-radius:9px;width:38px;height:38px}
+
+.score-row{position:absolute;z-index:3;top:74px;left:20px;right:20px;display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}
+.score-card{max-width:250px}
+.score-card strong{display:block;font:800 23px 'Barlow Condensed'}
+.player-two{text-align:right;justify-self:end}
+.meter{height:5px;background:#ffffff25;border-radius:5px;overflow:hidden;margin-top:5px}
+.meter i{display:block;height:100%;width:0;background:#62e4a0;transition:width .2s}
+.player-two .meter i{margin-left:auto;background:#ffad61}
+
+.status-pill{font-size:9px;font-weight:800;letter-spacing:.1em;padding:9px 12px;border:1px solid #ffffff38;border-radius:30px;background:#0a1b14c9;text-align:center}
+#ticker{position:absolute;z-index:3;top:145px;left:50%;transform:translateX(-50%);font:700 10px 'Barlow Condensed';letter-spacing:.15em;color:#e8d39d;text-align:center;white-space:nowrap}
+.controls-hint{position:absolute;z-index:3;bottom:18px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.12em;color:#c1d1c4;background:#07130fa8;padding:10px 16px;border-radius:30px}
+.mobile-controls{display:none}
+.result-panel{text-align:center}
+.result-panel h2{font:900 clamp(36px,8vw,58px)/.95 'Barlow Condensed';margin:20px 0;color:#a6ed66}
+.result-panel p{color:#bdcabe;font-size:13px}
+
+@media(max-width:700px){
+  .panel{padding:20px 16px;max-height:94vh}
+  .panel h1{font-size:42px}
+  .intro{font-size:11px}
+  .score-row{top:67px;left:12px;right:12px;gap:7px}
+  .status-pill{font-size:7px;padding:7px 8px}
+  .score-card strong{font-size:19px}
+  .score-card small{font-size:7px}
+  .topbar{top:12px;left:12px;right:12px}
+  .brand{font-size:9px}
+  .timer-wrap strong{font-size:24px}
+  #ticker{top:128px;font-size:8px;max-width:95%;white-space:normal}
+  .desktop-hint{display:none}
+  .mobile-controls{display:flex;position:absolute;z-index:4;bottom:12px;left:12px;right:12px;justify-content:space-between;align-items:end;pointer-events:none}
+  .dpad,.action-pad{pointer-events:auto}
+  .dpad button,.action-pad button{border:1px solid #ffffff45;background:#10271fd9;color:#fff;border-radius:12px;width:38px;height:38px;font-weight:800;touch-action:none}
+  .dpad>button{display:block;margin:0 auto 3px}
+  .dpad div{display:flex;gap:3px}
+  .action-pad{display:flex;gap:6px}
+  .action-pad button{width:56px;height:42px;font-size:8px;letter-spacing:.08em;color:#a6ed66}
+  .character-pair{margin:10px 0;padding:8px 6px}
+  .rule{font-size:9px;margin:6px 0}
+  .footnote{font-size:8px}
+  .brand-mark{width:29px;height:29px}
+  .controls-hint{display:none}
+}
 
 /* Landscape-first mobile entry experience */
 .orientation-guide{display:none;position:fixed;z-index:100;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,#173b2b 0%,#091b13 48%,#030b08 100%);color:#f4f4e9;padding:24px;place-items:center;text-align:center}
@@ -22,15 +107,34 @@
 .orientation-copy{max-width:300px;color:#b6c8ba;font-size:12px;line-height:1.6;margin:15px auto 0}
 .orientation-content .primary-btn{max-width:300px;margin-top:22px}
 .orientation-note{color:#728b7a;font-size:9px;margin-top:14px;letter-spacing:.05em}
+
 @keyframes phoneTurn{0%,12%{transform:rotate(0deg) scale(1)}45%,70%{transform:rotate(90deg) scale(1.08)}88%,100%{transform:rotate(90deg) scale(1)}}
 @keyframes arrowPulse{0%,100%{opacity:.35;transform:rotate(0) scale(.9)}50%{opacity:1;transform:rotate(45deg) scale(1.12)}}
+
 @media(orientation:landscape){.orientation-guide.is-visible{display:none!important}}
 @media(prefers-reduced-motion:reduce){.phone,.rotate-arrow{animation:none}}
 
 /* v2.0: strict portrait gate + cinematic widescreen HUD */
 body.needs-landscape #game-root,body.needs-landscape #hud,body.needs-landscape #overlay,body.needs-landscape #result,body.needs-landscape #pause-overlay,body.needs-landscape #loading{visibility:hidden!important;pointer-events:none!important}
 .orientation-guide{z-index:9999}
+
 @media (orientation:landscape) and (max-height:560px){
- .topbar{top:9px;left:22px;right:22px}.score-row{top:58px;left:22px;right:22px}.timer-wrap strong{font-size:24px}#ticker{top:113px;font-size:9px}.mobile-controls{bottom:10px;left:22px;right:22px}.dpad button{width:39px;height:36px}.action-pad button{height:42px;width:76px}.panel{max-width:540px;padding:17px 26px}.panel h1{font-size:48px;margin:10px 0}.character-pair{margin:10px 0;padding:8px}.rule{margin:6px 0}.primary-btn{margin-top:12px;padding:12px}.footnote{margin-top:8px}
+ .topbar{top:8px;left:16px;right:16px}
+ .score-row{top:52px;left:16px;right:16px}
+ .timer-wrap strong{font-size:22px}
+ #ticker{top:105px;font-size:8px}
+ .mobile-controls{bottom:8px;left:16px;right:16px}
+ .dpad button{width:34px;height:32px}
+ .action-pad button{height:38px;width:64px;font-size:7px}
+ .panel{max-width:480px;max-height:88vh;padding:14px 20px}
+ .panel h1{font-size:38px;margin:6px 0}
+ .character-pair{margin:8px 0;padding:6px}
+ .rule{margin:4px 0;font-size:9px}
+ .primary-btn{margin-top:10px;padding:10px}
+ .footnote{margin-top:6px}
 }
-@media (orientation:landscape) and (min-width:900px){.mobile-controls{display:none}.desktop-hint{display:block}}
+
+@media (orientation:landscape) and (min-width:900px){
+ .mobile-controls{display:none}
+ .desktop-hint{display:block}
+}
