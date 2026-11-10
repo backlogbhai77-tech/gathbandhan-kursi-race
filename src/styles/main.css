@@ -26,3 +26,11 @@
 @keyframes arrowPulse{0%,100%{opacity:.35;transform:rotate(0) scale(.9)}50%{opacity:1;transform:rotate(45deg) scale(1.12)}}
 @media(orientation:landscape){.orientation-guide.is-visible{display:none!important}}
 @media(prefers-reduced-motion:reduce){.phone,.rotate-arrow{animation:none}}
+
+/* v2.0: strict portrait gate + cinematic widescreen HUD */
+body.needs-landscape #game-root,body.needs-landscape #hud,body.needs-landscape #overlay,body.needs-landscape #result,body.needs-landscape #pause-overlay,body.needs-landscape #loading{visibility:hidden!important;pointer-events:none!important}
+.orientation-guide{z-index:9999}
+@media (orientation:landscape) and (max-height:560px){
+ .topbar{top:9px;left:22px;right:22px}.score-row{top:58px;left:22px;right:22px}.timer-wrap strong{font-size:24px}#ticker{top:113px;font-size:9px}.mobile-controls{bottom:10px;left:22px;right:22px}.dpad button{width:39px;height:36px}.action-pad button{height:42px;width:76px}.panel{max-width:540px;padding:17px 26px}.panel h1{font-size:48px;margin:10px 0}.character-pair{margin:10px 0;padding:8px}.rule{margin:6px 0}.primary-btn{margin-top:12px;padding:12px}.footnote{margin-top:8px}
+}
+@media (orientation:landscape) and (min-width:900px){.mobile-controls{display:none}.desktop-hint{display:block}}
