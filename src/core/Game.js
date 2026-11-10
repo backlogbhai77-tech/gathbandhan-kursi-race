@@ -16,7 +16,7 @@ export class Game {
     this.scene.fog = new THREE.FogExp2('#0a1a14', 0.022);
     this.camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
     this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.35));
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -82,13 +82,14 @@ export class Game {
   resize() {
     const w = this.root.clientWidth || window.innerWidth, h = this.root.clientHeight || window.innerHeight;
     this.camera.aspect = w / h; this.camera.updateProjectionMatrix(); this.renderer.setSize(w, h);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 900 ? 1.1 : 1.5));
   }
   loop() {
     requestAnimationFrame(() => this.loop());
     const dt = Math.min(this.clock.getDelta(), 0.04);
     if (this.running && !this.paused && !this.match.finished) {
-      this.player.update(dt, this.keys, this.cpu.group.position, this.match.owner === 0);
-      this.cpu.updateAI(dt, this.player.group.position, this.match);
+      this.player.update(dt, this.keys, this.cpu, this.match.owner === 0);
+      this.cpu.updateAI(dt, this.player, this.match);
       this.match.update(dt);
       this.hud.update();
       if (this.match.finished) this.hud.showResult(this.match.scores);
