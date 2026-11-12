@@ -117,8 +117,8 @@ function makeCharacter(team,accent,isHuman,name=''){
 }
 
 export class Player{
-  constructor(name,x,z,color,human){this.name=name;this.human=human;this.group=makeCharacter(color,human?'#ffad36':'#58b9ff',human,name);this.group.position.set(x,0,z);this.velocity=new THREE.Vector3();this.cooldown=0;this.stun=0;this.walkTime=0;this.color=color;this.knockback=new THREE.Vector3();this.captureBlend=0;this.attackPose=0;}
-  reset(x,z){this.group.position.set(x,0,z);this.velocity.set(0,0,0);this.knockback.set(0,0,0);this.cooldown=0;this.stun=0;this.captureBlend=0;this.group.rotation.set(0,0,0);}
+  constructor(name,x,z,color,human){this.name=name;this.human=human;this.group=makeCharacter(color,human?'#ffad36':'#58b9ff',human,name);this.group.position.set(x,0,z);this.velocity=new THREE.Vector3();this.cooldown=0;this.stun=0;this.walkTime=0;this.color=color;this.knockback=new THREE.Vector3();this.captureBlend=0;this.attackPose=0;this.actionCooldown=0;this.actionName='';this.actionTime=0;this.hitFlash=0;}
+  reset(x,z){this.group.position.set(x,0,z);this.velocity.set(0,0,0);this.knockback.set(0,0,0);this.cooldown=0;this.stun=0;this.captureBlend=0;this.actionCooldown=0;this.actionTime=0;this.actionName='';this.hitFlash=0;this.group.rotation.set(0,0,0);}
   update(dt,keys,opponent,isOwner=false){
     const dir=new THREE.Vector3();if(keys.KeyA||keys.ArrowLeft)dir.x--;if(keys.KeyD||keys.ArrowRight)dir.x++;if(keys.KeyW||keys.ArrowUp)dir.z--;if(keys.KeyS||keys.ArrowDown)dir.z++;
     if(dir.lengthSq())dir.normalize();const speed=(keys.ShiftLeft||keys.ShiftRight)?8.2:4.9;
@@ -127,7 +127,8 @@ export class Player{
     this.group.position.x=clamp(this.group.position.x+(this.velocity.x+this.knockback.x)*dt,-8.2,8.2);this.group.position.z=clamp(this.group.position.z+(this.velocity.z+this.knockback.z)*dt,-8.6,8.6);
     if(isOwner){dir.set(0,0,0);this.velocity.multiplyScalar(.12);this.group.position.x=THREE.MathUtils.damp(this.group.position.x,0,7,dt);this.group.position.z=THREE.MathUtils.damp(this.group.position.z,.92,7,dt);this.group.rotation.y=THREE.MathUtils.damp(this.group.rotation.y,Math.PI,5,dt);}
     this.knockback.multiplyScalar(Math.exp(-5.2*dt));if(dir.lengthSq())this.group.rotation.y=Math.atan2(dir.x,dir.z);
-    this.cooldown=Math.max(0,this.cooldown-dt);if(keys.Space&&this.cooldown===0){this.push(opponent);this.cooldown=.9;}
+    this.cooldown=Math.max(0,this.cooldown-dt);this.actionCooldown=Math.max(0,this.actionCooldown-dt);this.actionTime=Math.max(0,this.actionTime-dt);this.hitFlash=Math.max(0,this.hitFlash-dt);
+    if(keys.KeyJ||keys.Space)this.tryAction('punch',opponent);if(keys.KeyK)this.tryAction('kick',opponent);if(keys.KeyL)this.tryAction('grab',opponent);if(keys.KeyI)this.tryAction('super',opponent);
     this.animate(dt,dir.length(),isOwner);
   }
   updateAI(dt,opponent,match){
@@ -138,7 +139,21 @@ export class Player{
     if(this.stun>0){this.stun=Math.max(0,this.stun-dt);this.velocity.multiplyScalar(.3);}
     p.x=clamp(p.x+(this.velocity.x+this.knockback.x)*dt,-8.2,8.2);p.z=clamp(p.z+(this.velocity.z+this.knockback.z)*dt,-8.6,8.6);
     if(match.owner===1){this.velocity.multiplyScalar(.12);p.x=THREE.MathUtils.damp(p.x,0,7,dt);p.z=THREE.MathUtils.damp(p.z,.92,7,dt);this.group.rotation.y=THREE.MathUtils.damp(this.group.rotation.y,Math.PI,5,dt);}
-    this.knockback.multiplyScalar(Math.exp(-5.2*dt));if(dist<1.8&&this.cooldown<=0){this.push(opponent);this.cooldown=1.2;}this.cooldown=Math.max(0,this.cooldown-dt);if(dir.lengthSq())this.group.rotation.y=Math.atan2(dir.x,dir.z);this.animate(dt,dir.length(),match.owner===1);
+    this.knockback.multiplyScalar(Math.exp(-5.2*dt));this.cooldown=Math.max(0,this.cooldown-dt);this.actionCooldown=Math.max(0,this.actionCooldown-dt);this.actionTime=Math.max(0,this.actionTime-dt);this.hitFlash=Math.max(0,this.hitFlash-dt);if(dist<2.35&&this.actionCooldown<=0&&Math.random()<dt*.8){this.tryAction(Math.random()<.65?'punch':'kick',opponent); }if(dir.lengthSq())this.group.rotation.y=Math.atan2(dir.x,dir.z);this.animate(dt,dir.length(),match.owner===1);
+  }
+  tryAction(type,opponent){
+    if(this.actionCooldown>0||this.stun>0)return false;
+    const target=opponent.group?opponent.group.position:opponent;const me=this.group.position;
+    const dx=target.x-me.x,dz=target.z-me.z,dist=Math.hypot(dx,dz);
+    const reach=type==='grab'?1.75:type==='kick'?2.75:type==='super'?3.25:2.35;
+    this.actionName=type;this.actionTime=type==='super'?.62:type==='grab'?.48:.34;
+    this.actionCooldown=type==='super'?4.2:type==='grab'?1.25:type==='kick'?.72:.48;
+    if(dist<=reach&&dist>.001){
+      const nx=dx/dist,nz=dz/dist;const force=type==='super'?15:type==='kick'?9.5:type==='grab'?6.5:7.2;
+      if(opponent.group){opponent.knockback.set(nx*force,0,nz*force);opponent.stun=type==='super'?1.05:type==='grab'?.72:.48;opponent.hitFlash=.22;}
+      else {target.x=clamp(target.x+nx*(type==='super'?2.4:1.15),-8.2,8.2);target.z=clamp(target.z+nz*(type==='super'?2.4:1.15),-8.6,8.6);}
+    }
+    return true;
   }
   animate(dt,moving,isOwner){
     this.walkTime+=dt*(moving>.1?10:2.2);const u=this.group.userData;this.captureBlend=THREE.MathUtils.damp(this.captureBlend,isOwner?1:0,4.5,dt);const seated=this.captureBlend;
@@ -151,6 +166,9 @@ export class Player{
     u.head.rotation.x=-u.torso.rotation.x*.35;
     for(const leg of u.legs){leg.hip.rotation.x=THREE.MathUtils.lerp(leg.hip.rotation.x,-.72,seated);leg.knee.rotation.x=THREE.MathUtils.lerp(leg.knee.rotation.x,1.12,seated);}
     for(const arm of u.arms){arm.shoulder.rotation.x=THREE.MathUtils.lerp(arm.shoulder.rotation.x,-.48,seated);arm.elbow.rotation.x=THREE.MathUtils.lerp(arm.elbow.rotation.x,-.45,seated);}
+    const attack=this.actionTime>0?Math.sin((1-this.actionTime/(this.actionName==='super'?.62:this.actionName==='grab'?.48:.34))*Math.PI):0;
+    if(attack>0&&!seated){const a=u.arms[1];if(this.actionName==='punch'||this.actionName==='super'){a.shoulder.rotation.x-=attack*(this.actionName==='super'?1.65:1.15);a.elbow.rotation.x-=attack*.65;}else if(this.actionName==='grab'){u.arms[0].shoulder.rotation.x-=attack*.8;u.arms[1].shoulder.rotation.x-=attack*.8;}if(this.actionName==='kick'){u.legs[1].hip.rotation.x-=attack*1.35;u.legs[1].knee.rotation.x+=attack*.35;}}
+    if(this.stun>0&&!seated){u.torso.rotation.x-=.22;u.head.rotation.x+=.18;}
     this.group.position.y=Math.sin(this.walkTime*2)*.018*(moving>.1?1:0)-.08*seated;
     u.aura.material.opacity=.34+.14*Math.sin(this.walkTime*2.4);
   }
