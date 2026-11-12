@@ -15,10 +15,12 @@ export class Game {
     this.scene.background = new THREE.Color('#07130f');
     this.scene.fog = new THREE.FogExp2('#0a1a14', 0.022);
     this.camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.35));
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    const cores = navigator.hardwareConcurrency || 4;
+    this.performanceTier = (cores <= 4 || window.innerWidth < 700) ? 'mobile' : (cores <= 6 ? 'balanced' : 'high');
+    this.renderer = new THREE.WebGLRenderer({ antialias: this.performanceTier === 'high', powerPreference: 'high-performance', alpha: false, stencil: false, depth: true });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.performanceTier === 'mobile' ? 0.9 : this.performanceTier === 'balanced' ? 1.1 : 1.35));
+    this.renderer.shadowMap.enabled = this.performanceTier !== 'mobile';
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.18;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -30,7 +32,8 @@ export class Game {
     this.buildWorld();
     this.bind();
     this.resize();
-    window.addEventListener('resize', () => this.resize());
+    window.addEventListener('resize', () => this.resize(), { passive: true });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) this.clock.getDelta(); });
     this.loop();
   }
   buildWorld() {
@@ -82,10 +85,12 @@ export class Game {
   resize() {
     const w = this.root.clientWidth || window.innerWidth, h = this.root.clientHeight || window.innerHeight;
     this.camera.aspect = w / h; this.camera.updateProjectionMatrix(); this.renderer.setSize(w, h);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 900 ? 1.1 : 1.5));
+    const cap = this.performanceTier === 'mobile' ? 0.9 : this.performanceTier === 'balanced' ? 1.1 : 1.35;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, cap));
   }
   loop() {
     requestAnimationFrame(() => this.loop());
+    if (document.hidden) return;
     const dt = Math.min(this.clock.getDelta(), 0.04);
     if (this.running && !this.paused && !this.match.finished) {
       this.player.update(dt, this.keys, this.cpu, this.match.owner === 0);
