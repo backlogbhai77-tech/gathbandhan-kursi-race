@@ -61,11 +61,11 @@ export function createArena(scene){
  }
  // Decorative ceiling truss and suspended spotlights.
  const roofRing=addMesh(root,new THREE.TorusGeometry(13.5,.18,10,128),goldDark,[0,8.7,0]);roofRing.rotation.x=Math.PI/2;
- for(let i=0;i<16;i++){const a=i/16*Math.PI*2;const x=Math.sin(a)*13.5,z=Math.cos(a)*13.5;const beam=addMesh(root,new THREE.BoxGeometry(.12,1.8,.12),goldDark,[x,7.8,z]);beam.rotation.z=Math.sin(a)*.3;const lamp=new THREE.SpotLight(i%2?'#ffd69a':'#a5f5cb',95,24,.5,.65,1.1);lamp.position.set(x,8.2,z);lamp.target.position.set(0,0,0);scene.add(lamp,lamp.target);}
+ for(let i=0;i<4;i++){const a=i/4*Math.PI*2;const x=Math.sin(a)*13.5,z=Math.cos(a)*13.5;const beam=addMesh(root,new THREE.BoxGeometry(.12,1.8,.12),goldDark,[x,7.8,z]);beam.rotation.z=Math.sin(a)*.3;const lamp=new THREE.SpotLight(i%2?'#ffd69a':'#a5f5cb',18,24,.55,.7,1.4);lamp.position.set(x,8.2,z);lamp.target.position.set(0,0,0);scene.add(lamp,lamp.target);}
  // Lighting rig: cinematic key, fill, rim and local stage pools.
- scene.add(new THREE.HemisphereLight('#d8f1df','#15251c',1.45));
- const key=new THREE.DirectionalLight('#fff0d1',3.6);key.position.set(-8,17,11);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-19;key.shadow.camera.right=19;key.shadow.camera.top=19;key.shadow.camera.bottom=-19;key.shadow.bias=-.00015;scene.add(key);
- const rim=new THREE.DirectionalLight('#79dca7',1.5);rim.position.set(9,8,-13);scene.add(rim);
- const amber=new THREE.PointLight('#ffb66e',34,18);amber.position.set(7,5,3);scene.add(amber);const green=new THREE.PointLight('#66efad',34,18);green.position.set(-7,5,-3);scene.add(green);
+ scene.add(new THREE.HemisphereLight('#d8f1df','#15251c',0.85));
+ const key=new THREE.DirectionalLight('#fff0d1',1.65);key.position.set(-8,17,11);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-19;key.shadow.camera.right=19;key.shadow.camera.top=19;key.shadow.camera.bottom=-19;key.shadow.bias=-.00015;scene.add(key);
+ const rim=new THREE.DirectionalLight('#79dca7',0.65);rim.position.set(9,8,-13);scene.add(rim);
+ const amber=new THREE.PointLight('#ffb66e',10,18);amber.position.set(7,5,3);scene.add(amber);const green=new THREE.PointLight('#66efad',10,18);green.position.set(-7,5,-3);scene.add(green);
  return root;
 }
