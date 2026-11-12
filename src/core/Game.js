@@ -18,11 +18,12 @@ export class Game {
     const cores = navigator.hardwareConcurrency || 4;
     this.performanceTier = (cores <= 4 || window.innerWidth < 700) ? 'mobile' : (cores <= 6 ? 'balanced' : 'high');
     this.renderer = new THREE.WebGLRenderer({ antialias: this.performanceTier === 'high', powerPreference: 'high-performance', alpha: false, stencil: false, depth: true });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.performanceTier === 'mobile' ? 0.9 : this.performanceTier === 'balanced' ? 1.1 : 1.35));
-    this.renderer.shadowMap.enabled = this.performanceTier !== 'mobile';
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.performanceTier === 'mobile' ? 0.75 : this.performanceTier === 'balanced' ? 0.95 : 1.2));
+    this.renderer.setClearColor(0x07130f, 1);
+    this.renderer.shadowMap.enabled = this.performanceTier === 'high';
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.18;
+    this.renderer.toneMappingExposure = 0.92;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     root.appendChild(this.renderer.domElement);
     this.clock = new THREE.Clock();
