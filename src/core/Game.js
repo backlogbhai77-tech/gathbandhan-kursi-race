@@ -18,12 +18,11 @@ export class Game {
     const cores = navigator.hardwareConcurrency || 4;
     this.performanceTier = (cores <= 4 || window.innerWidth < 700) ? 'mobile' : (cores <= 6 ? 'balanced' : 'high');
     this.renderer = new THREE.WebGLRenderer({ antialias: this.performanceTier === 'high', powerPreference: 'high-performance', alpha: false, stencil: false, depth: true });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.performanceTier === 'mobile' ? 0.75 : this.performanceTier === 'balanced' ? 0.95 : 1.2));
-    this.renderer.setClearColor(0x07130f, 1);
-    this.renderer.shadowMap.enabled = this.performanceTier === 'high';
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.performanceTier === 'mobile' ? 0.9 : this.performanceTier === 'balanced' ? 1.1 : 1.35));
+    this.renderer.shadowMap.enabled = this.performanceTier !== 'mobile';
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 0.92;
+    this.renderer.toneMappingExposure = 1.18;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     root.appendChild(this.renderer.domElement);
     this.clock = new THREE.Clock();
@@ -34,7 +33,7 @@ export class Game {
     this.bind();
     this.resize();
     window.addEventListener('resize', () => this.resize(), { passive: true });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) this.clock.getDelta(); });
+    document.addEventListener('visibilitychange', () => { this.clock.getDelta(); });
     this.loop();
   }
   buildWorld() {
@@ -66,7 +65,7 @@ export class Game {
       el.addEventListener('pointerdown', e => { e.preventDefault(); this.keys[code] = true; });
       ['pointerup','pointerleave','pointercancel'].forEach(ev => el.addEventListener(ev, () => this.keys[code] = false));
     };
-    hold('#push-btn', 'Space'); hold('#dash-btn', 'ShiftLeft');
+    hold('#punch-btn', 'KeyJ'); hold('#kick-btn', 'KeyK'); hold('#grab-btn', 'KeyL'); hold('#super-btn', 'KeyI');
   }
   start() {
     document.querySelector('#overlay').classList.add('hidden');
@@ -100,6 +99,7 @@ export class Game {
       this.hud.update();
       if (this.match.finished) this.hud.showResult(this.match.scores);
     }
+    if(document.hidden)return;
     this.cameraRig.update(dt);
     this.throne.userData.update?.(dt, this.match?.owner, this.match?.contested);
     this.atmosphere.update(dt);
