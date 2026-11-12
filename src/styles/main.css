@@ -79,8 +79,8 @@ canvas{display:block;width:100%;height:100%}
   .dpad button,.action-pad button{border:1px solid #ffffff45;background:#10271fd9;color:#fff;border-radius:12px;width:38px;height:38px;font-weight:800;touch-action:none}
   .dpad>button{display:block;margin:0 auto 3px}
   .dpad div{display:flex;gap:3px}
-  .action-pad{display:flex;gap:6px}
-  .action-pad button{width:56px;height:42px;font-size:8px;letter-spacing:.08em;color:#a6ed66}
+  .action-pad{display:grid;grid-template-columns:repeat(2,58px);gap:6px}
+  .action-pad button{width:58px;height:42px;font-size:8px;letter-spacing:.08em;color:#fff;border-radius:50%;background:#132a22dd}.action-pad .punch{border-color:#ffad61;color:#ffd0a0}.action-pad .kick{border-color:#54baff;color:#a8dcff}.action-pad .grab{border-color:#62e4a0;color:#a6edc5}.action-pad .super{border-color:#d4a5ff;color:#e3c7ff}
   .character-pair{margin:10px 0;padding:8px 6px}
   .rule{font-size:9px;margin:6px 0}
   .footnote{font-size:8px}
@@ -137,28 +137,4 @@ body.needs-landscape #game-root,body.needs-landscape #hud,body.needs-landscape #
 @media (orientation:landscape) and (min-width:900px){
  .mobile-controls{display:none}
  .desktop-hint{display:block}
-}
-
-/* v2.3 visual correction: clean fighting-game HUD, no narrative ticker */
-#ticker,.status-pill,.controls-hint,.eyebrow,.intro,.rule,.footnote{display:none!important}
-#game-root{z-index:0;background:#07130f;overflow:hidden}
-#game-root canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
-#hud{position:absolute;inset:0;z-index:5;pointer-events:none}
-#hud button,#hud .mobile-controls{pointer-events:auto}
-.score-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,4vw,54px);top:72px}
-.score-card{max-width:none}
-.score-card small{font-size:clamp(9px,1.2vw,14px);font-weight:800;letter-spacing:.13em;color:#f3e6c7}
-.score-card strong{font-size:clamp(22px,3vw,38px);color:#fff4d8;text-shadow:0 2px 8px #000}
-.meter{height:clamp(7px,.9vw,11px);background:#160f0b;border:1px solid #f0d59b;border-radius:2px}
-.meter i{background:linear-gradient(90deg,#ff9b26,#ffe07a)}
-.player-two .meter i{background:linear-gradient(90deg,#ffe07a,#ff9b26)}
-.topbar{top:12px}
-.timer-wrap strong{font-size:clamp(30px,4vw,52px);color:#ffe6a6;text-shadow:0 2px 10px #000}
-.timer-wrap small{color:#f5e5c7}
-.icon-btn{pointer-events:auto;background:#10251fdd;border:2px solid #e9d19b;width:44px;height:44px;font-size:18px}
-#result-copy{font-weight:800;letter-spacing:.08em}
-@media(max-width:700px){
- .score-row{top:62px;left:12px;right:12px}
- .topbar{top:8px;left:12px;right:12px}
- .score-card strong{font-size:20px}
 }
